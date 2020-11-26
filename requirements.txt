@@ -7,3 +7,4 @@ keras
 sklearn
 pymongo
 dash
+colorlover
