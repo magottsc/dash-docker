@@ -5,7 +5,7 @@ networks:
 services:
   # main application
   myapp:
-    container_name: myapp
+    container_name: betting-dashboard
     build:
       .
     ports:
