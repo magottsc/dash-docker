@@ -1,8 +1,4 @@
-# -*- coding: utf-8 -*-
-
-# Run this app with `python app.py` and
-# visit http://127.0.0.1:8050/ in your web browser.
-
+import Flask
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -207,13 +203,8 @@ def get_return_table():
     df_return_table = df_return_table.rename(columns={"team1": "Team 1", "team2": "Team 2", "result_word":"State", "cf_synth": "PnL","fees": "Fee"})
     return df_return_table
 
-
-
-
-
-#external_stylesheets = ['https://github.com/plotly/dash-app-stylesheets/blob/master/dash-oil-and-gas.css']
-
-app = dash.Dash(__name__)
+server = Flask(__name__)
+app = dash.Dash(server = server)
 
 app.layout = html.Div(
     children=[
