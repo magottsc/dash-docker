@@ -8,9 +8,6 @@ import pandas as pd
 import pymongo
 import pandas as pd
 import numpy as np
-import seaborn as sns
-import matplotlib
-import matplotlib.pyplot as plt
 from dash.dependencies import Input, Output
 from flask import Flask
 session = pymongo.MongoClient("mongodb://192.168.1.10:27017/")
