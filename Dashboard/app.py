@@ -396,6 +396,9 @@ def get_pnl_scatter(n):
     fig = go.Figure()
     fig.add_trace(go.Scatter(x=df.index, y=wins, mode='markers', name='Wins', marker=dict(color=('rgb(191, 255, 0)'))))
     fig.add_trace(go.Scatter(x=df.index, y=loss, mode='markers', name='Losses'))
+    fig.add_hline(y=np.nanmean(wins), line_dash = "dot", line = {"color": 'rgb(191, 255, 0)', "width":1,})
+    fig.add_hline(y=np.nanmean(loss), line_dash = "dot", line = {"color": 'red', "width":1,})
+
     fig.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)',
                                     'paper_bgcolor': 'rgba(0, 0, 0, 0)'},
                                     xaxis_tickformat = "%d %B")
@@ -407,6 +410,8 @@ def get_pnl_scatter(n):
                                 x=1
                             ))
     fig.update_layout(margin=dict(l=15, r=10, t=15, b=5), template = "plotly_dark")
+    fig.update_yaxes(showgrid=False)
+    fig.update_xaxes(showgrid=False, color="rgb(255,255,255)")
     return fig
 
 @app.callback(Output('step-pnl','figure'),
@@ -415,12 +420,14 @@ def get_pnl_step(n):
     df = run_pnl()
     df_step = df.sort_index(ascending=True)
     fig_step_pnl = go.Figure()
+    fig_step_pnl.add_hline(y=0, line_dash = "dot", line = {"color": 'rgb(255, 255, 255)', "width":1,})
     fig_step_pnl.add_trace(go.Scatter(x=df_step.index, y=df_step.cf.cumsum(), name="Raw CF", line_shape='vhv', 
                                         line = dict(color = ('rgb(7, 110, 227)'), width = 2)))
     fig_step_pnl.add_trace(go.Scatter(x=df_step.index, y=df_step.cf_clean.cumsum(), name="Clean CF", line_shape='vhv', 
                                         line = dict(color = ('rgb(105, 168, 240)'), width = 2)))
     fig_step_pnl.add_trace(go.Scatter(x=df_step.index, y=df_step.cf_synth.cumsum(), name="Synthetic CF", line_shape='vhv', 
                                         line = dict(color = ('rgb(211, 222, 235)'), width = 2)))
+
     fig_step_pnl.update_layout(template = "plotly_dark")
     fig_step_pnl.update_layout({'plot_bgcolor': 'rgba(0, 0, 0, 0)',
                                         'paper_bgcolor': 'rgba(0, 0, 0, 0)'},
@@ -436,6 +443,7 @@ def get_pnl_step(n):
         margin=dict(l=15, r=10, t=15, b=5))
 
     fig_step_pnl.update_yaxes(tickprefix="€ ", showgrid=False)
+    fig_step_pnl.update_xaxes(showgrid=False)
     return fig_step_pnl
 
 @app.callback(Output('daily-pnl','figure'),
@@ -450,6 +458,7 @@ def get_daily_pnl(n):
                                     'paper_bgcolor': 'rgba(0, 0, 0, 0)'},
                                     xaxis_tickformat = "%d %B", margin=dict(l=15, r=10, t=15, b=5)).update(layout_coloraxis_showscale=False).update_yaxes( 
                                                                             tickprefix="€ ", showgrid=False)
+    fig.update_traces(opacity = 0.9)
     return fig
 
 
