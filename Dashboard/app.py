@@ -1,4 +1,3 @@
-import Flask
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
@@ -13,6 +12,7 @@ import seaborn as sns
 import matplotlib
 import matplotlib.pyplot as plt
 from dash.dependencies import Input, Output
+from flask import Flask
 session = pymongo.MongoClient("mongodb://192.168.1.10:27017/")
 
 
